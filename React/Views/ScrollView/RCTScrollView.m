@@ -887,6 +887,15 @@ RCT_SCROLL_EVENT_HANDLER(scrollViewDidScrollToTop, onScrollToTop)
     // Set new targetContentOffset
     if (isHorizontal) {
       targetContentOffset->x = newTargetContentOffset;
+      if (newTargetContentOffset + snapToIntervalF <= scrollView.contentSize.width) {
+          [UIView animateWithDuration:0.2
+                                delay:0
+                              options:UIViewAnimationOptionCurveLinear
+                           animations:^{
+            [scrollView setContentOffset:*targetContentOffset animated:NO];
+          } completion:nil];
+      }
+      
     } else {
       targetContentOffset->y = newTargetContentOffset;
     }
